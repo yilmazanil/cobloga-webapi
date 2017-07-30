@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using NLog.Extensions.Logging;
 
 namespace Cobloga.WebApi
 {
@@ -32,7 +33,9 @@ namespace Cobloga.WebApi
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
-
+            loggerFactory.AddDebug();
+            //loggerFactory.AddProvider(new NLog.Extensions.Logging.NLogLoggerProvider());
+            loggerFactory.AddNLog();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

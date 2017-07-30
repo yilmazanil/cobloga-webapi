@@ -1,6 +1,8 @@
 ﻿using Cobloga.WebApi.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,14 @@ namespace Cobloga.WebApi.Controllers
     [Route("api/notes")]
     public class NotesController : Controller
     {
+        private ILogger<NotesController> _logger;
+
+        public NotesController(ILogger<NotesController> logger)
+        {
+            _logger = logger;
+            //Constructor Injection or get by request services HttpContext.RequestServices.GetService();
+        }
+
         [HttpGet()]
         public IActionResult GetNotes()
         {
@@ -20,14 +30,23 @@ namespace Cobloga.WebApi.Controllers
         [HttpGet("{id}", Name = "GetNote")]
         public IActionResult Get(int id)
         {
-            // find city
-            var noteToReturn = NotesDataSource.Current.Notes.FirstOrDefault(n => n.Id == id);
-            if (noteToReturn == null)
+            try
             {
-                return NotFound();
-            }
+                // find city
+                var noteToReturn = NotesDataSource.Current.Notes.FirstOrDefault(n => n.Id == id);
+                if (noteToReturn == null)
+                {
+                    _logger.LogInformation($"Note with id {id} was not found");
+                    return NotFound();
+                }
 
-            return Ok(noteToReturn);
+                return Ok(noteToReturn);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Exception while getting city with id {id}", ex);
+                return StatusCode(500, "A problem happened while handling your request");
+            }
         }
 
         [HttpPost]
@@ -139,7 +158,7 @@ namespace Cobloga.WebApi.Controllers
             noteToUpdate.Body = note.Body;
             noteToUpdate.Tags = tags;
             noteToUpdate.ModifiedDate = DateTime.Now;
-                    
+
             return NoContent();
         }
 
