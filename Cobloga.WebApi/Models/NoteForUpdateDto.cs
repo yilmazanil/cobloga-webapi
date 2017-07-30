@@ -12,6 +12,6 @@ namespace Cobloga.WebApi.Models
         [Required(ErrorMessage = "Note Body is not provided")]
         public string Body { get; set; }
 
-        public ICollection<TagDto> Tags { get; set; }
+        public ICollection<TagForCreateDto> Tags { get; set; }
     }
 }

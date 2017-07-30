@@ -51,6 +51,28 @@ namespace Cobloga.WebApi.Controllers
             // demo purposes - to be improved
             var noteId = NotesDataSource.Current.Notes.Max(n => n.Id);
 
+            var tags = new List<TagDto>();
+
+
+            //Tag source will be seperated, for test purpose only
+            var currentTags = NotesDataSource.Current.Notes.SelectMany(
+                 n => n.Tags
+             );
+            var maxTagId = currentTags.Max(t => t.Id);
+            foreach (var tag in note.Tags)
+            {
+
+                var existingTag = currentTags.FirstOrDefault(t => t.Name == tag.Name);
+
+                if (existingTag != null)
+                {
+                    tags.Add(existingTag);
+                }
+                else
+                {
+                    tags.Add(new TagDto { Id = ++maxTagId, Name = tag.Name });
+                }
+            }
             //Tags must be improved
             var noteToAdd = new NoteDto
             {
@@ -58,7 +80,7 @@ namespace Cobloga.WebApi.Controllers
                 Subject = note.Subject,
                 Body = note.Body,
                 CreatedDate = DateTime.Now,
-                Tags = note.Tags
+                Tags = tags
             };
             NotesDataSource.Current.Notes.Add(noteToAdd);
 
@@ -92,9 +114,30 @@ namespace Cobloga.WebApi.Controllers
                 return NotFound();
             }
 
+            var tags = new List<TagDto>();
+            var currentTags = NotesDataSource.Current.Notes.SelectMany(
+                 n => n.Tags
+             );
+            var maxTagId = currentTags.Max(t => t.Id);
+            foreach (var tag in note.Tags)
+            {
+
+                var existingTag = currentTags.FirstOrDefault(t => t.Name == tag.Name);
+
+                if (existingTag != null)
+                {
+                    tags.Add(existingTag);
+                }
+                else
+                {
+                    tags.Add(new TagDto { Id = ++maxTagId, Name = tag.Name });
+                }
+            }
+
+
             noteToUpdate.Subject = note.Subject;
             noteToUpdate.Body = note.Body;
-            noteToUpdate.Tags = note.Tags;
+            noteToUpdate.Tags = tags;
             noteToUpdate.ModifiedDate = DateTime.Now;
                     
             return NoContent();

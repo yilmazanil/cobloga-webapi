@@ -1,0 +1,234 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Cobloga-WebApi",
+		"_postman_id": "3a3203fd-2f6f-7c8a-d273-a0335e80ee54",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Notes Default (JSON)",
+			"request": {
+				"url": "http://localhost:50467/api/notes",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Notes(XML)",
+			"request": {
+				"url": "http://localhost:50467/api/notes",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Note by Id",
+			"request": {
+				"url": "http://localhost:50467/api/notes/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Note Example",
+			"request": {
+				"url": "http://localhost:50467/api/notes/1",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n      \"op\": \"replace\",\n      \"path\": \"/subject\",\n      \"value\": \"Updated - Note 2\"\n    },\n    {\n      \"op\": \"replace\",\n      \"path\": \"/Body\",\n      \"value\": \"Updated - NoteBody\"\n    },\n    {\n      \"op\": \"remove\",\n      \"path\": \"/name\"\n    }\n]\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Note Example 2",
+			"request": {
+				"url": "http://localhost:50467/api/notes/1",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n      \"op\": \"remove\",\n      \"path\": \"/subject\"\n    }\n]\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Note by Id (unexisting Note)",
+			"request": {
+				"url": "http://localhost:50467/api/notes/10",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Tags By Note",
+			"request": {
+				"url": "http://localhost:50467/api/notes/1/tags",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Tags By Note (unexisting Tag)",
+			"request": {
+				"url": "http://localhost:50467/api/notes/10/tags",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Note",
+			"request": {
+				"url": "http://localhost:50467/api/notes",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Body\": \"Test\",\n    \"Subject\": \"Web Api Request Subject\",\n    \"Tags\": [\n    \t{ \"name\": \"test\" },\n    \t{ \"name\": \"c#\" }\n     ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Note (can't deserialize)",
+			"request": {
+				"url": "http://localhost:50467/api/notes",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST Note (missing field)",
+			"request": {
+				"url": "http://localhost:50467/api/notes",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Body\": \"Test\",\n    \"Tags\": [\n    \t{ \"name\": \"test\" },\n    \t{ \"name\": \"c#\" }\n     ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Note",
+			"request": {
+				"url": "http://localhost:50467/api/notes/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Body\": \"Test\",\n    \"Subject\": \"Web Api Request Subject\",\n    \"Tags\": [\n    \t{ \"name\": \"test\" },\n    \t{ \"name\": \"c#\" }\n     ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Note (not exists)",
+			"request": {
+				"url": "http://localhost:50467/api/notes",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Body\": \"Test\",\n    \"Subject\": \"Web Api Request Subject\",\n    \"Tags\": [\n    \t{ \"name\": \"test\" },\n    \t{ \"name\": \"c#\" }\n     ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Note",
+			"request": {
+				"url": "http://localhost:50467/api/notes/1",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
